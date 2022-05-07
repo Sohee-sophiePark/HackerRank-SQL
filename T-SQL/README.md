@@ -1,0 +1,1 @@
+This feature refers to SQL Server 2019 Documentation for Queries Execution
