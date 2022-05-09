@@ -54,3 +54,22 @@ WITH lagTab AS(
 SELECT *
 FROM lagTab
 where Total_Marks - PreYr_Marks >= 0 
+
+
+-- CASE WHEN
+SELECT Student_Name, Total_Marks, PreYr_Marks
+FROM(
+SELECT *
+, CASE 
+WHEN Total_Marks >= PreYr_Marks THEN 1 ELSE 0 END flag
+FROM
+(
+    SELECT Student_Name
+    , YEAR
+    , Total_Marks
+    , LAG(Total_Marks) OVER (PARTITION BY Student_Name ORDER BY YEAR) PreYr_Marks
+    FROM
+    Student
+) as inTab
+) as outTab
+WHERE flag = 1

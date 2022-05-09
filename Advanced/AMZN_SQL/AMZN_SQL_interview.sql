@@ -21,9 +21,10 @@ VALUES
 ('C', 'Mandrin')
 
 
-
+-- distinct 
+-- maybe expensive
 WITH uniqLangTab AS(
-    SELECT BookName, COUNT(DIstinct Lang) uniqLangPerBook,
+    SELECT BookName, COUNT(distinct Lang) uniqLangPerBook,
     (
         SELECT COUNT(DISTINCT Lang) 
         FROM
@@ -44,7 +45,7 @@ WHERE perc >= 50
 
 
 
-
+-- group by aggregation to get distinct values
 WITH uniqTotLang AS(
     SELECT Lang
     FROM books
