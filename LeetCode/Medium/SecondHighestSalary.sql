@@ -50,17 +50,31 @@ Output:
 
 */
 
+-- 1. get the dense rank for 2nd highest
+-- 2. create temp table for ranking top2
+-- 3. validation for non-top2 table and return NULL
 SELECT top(1) e.salary SecondHighestSalary 
 FROM
 (
-SELECT salary , DENSE_RANK() OVER (ORDER BY Salary desc) rnk
-FROM 
-EMployee 
+    SELECT salary 
+    , DENSE_RANK() OVER (ORDER BY Salary desc) rnk
+    FROM 
+    EMployee 
 ) e
 RIGHT JOIN 
-(SELECT 1 as rnk UNION ALL SELECT 2) r
+(
+    SELECT 1 as rnk 
+    UNION ALL 
+    SELECT 2
+) r
 ON e.rnk = r.rnk
 where r.rnk = 2
+
+
+-- 1. get max salary
+-- 2. get second max salary that is not equal to the max value
+select max(salary) as SecondHighestSalary from Employee
+where salary <>(select max(salary) from Employee)
 
 
 /*
